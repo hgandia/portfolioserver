@@ -56,18 +56,19 @@ usersRouter.route('/signup')
           if(req.body.admin){
             user.admin = req.body.admin; 
           }          
-          user.save(err => {
-            if(err){
+          user.save()
+          .then(
+                passport.authenticate('local')(req, res, () => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({ success: true, status: 'Registration Successful!' });
+              
+          }))
+          .catch(err => {
               res.statusCode = 500;
               res.setHeader('Content-Type', 'application/json');
               res.json({err: err});
               return;
-            }
-            passport.authenticate('local')(req, res, () => {
-              res.statusCode = 200;
-              res.setHeader('Content-Type', 'application/json');
-              res.json({ success: true, status: 'Registration Successful!' });
-            });
           });
         }
       }
