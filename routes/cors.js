@@ -2,7 +2,10 @@ const cors = require('cors');
 
 const whitelist = [
     'http://localhost:3000', 
-    'https://localhost:3443'
+    'https://localhost:3443',
+    'http://herbertgandia.com',
+    'https://herbertgandia.com',
+    'http://www.herbertgandia.com'
 ];
 
 const corsOptionsDelegate = (req, callback) => {

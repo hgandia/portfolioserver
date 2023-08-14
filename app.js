@@ -15,7 +15,7 @@ const config = require('./config');
 
 const url = config.mongoUrl;
 
-const connect = mongoose.connect(url, {
+const connect = mongoose.connect(url, //{
   //When this server was started I used mongoose v.5.13.16
   //The below options were needed.  However, now in mongoose v.7.4.2
   //These options below are not needed any longer.
@@ -23,7 +23,8 @@ const connect = mongoose.connect(url, {
   // useFindAndModify: false,
   // useNewUrlParser: true,
   // useUnifiedTopology: true
-});
+//}
+);
 
 connect.then(() => {
   console.log('Connected correctly to MongoDB server'), err => console.log(err);
