@@ -56,19 +56,18 @@ usersRouter.route('/signup')
           if(req.body.admin){
             user.admin = req.body.admin; 
           }          
-          user.save()
-          .then(
-                passport.authenticate('local')(req, res, () => {
-                res.statusCode = 200;
-                res.setHeader('Content-Type', 'application/json');
-                res.json({ success: true, status: 'Registration Successful!' });
-              
-          }))
-          .catch(err => {
+          user.save(err => {
+            if(err){
               res.statusCode = 500;
               res.setHeader('Content-Type', 'application/json');
               res.json({err: err});
               return;
+            }
+              passport.authenticate('local')(req, res, () => {
+              res.statusCode = 200;
+              res.setHeader('Content-Type', 'application/json');
+              res.json({ success: true, status: 'Registration Successful!' });
+            });
           });
         }
       }
@@ -97,12 +96,13 @@ usersRouter.route('/login')
         res.setHeader('Content-Type', 'application/json');
         return res.json({
             success: false,
-            status: 'Login Unsuccessful!',
+            status: 'Login Unsuccessful!\nNo User with that username.',
             err: info
         });
     }
     req.logIn(user, (err) => {
         if (err) {
+          console.log(err);
             res.statusCode = 401;
             res.setHeader('Content-Type', 'application/json');
             return res.json({
