@@ -3,9 +3,9 @@ const Visitor = require('../models/visitor');
 const authenticate = require('../authenticate');
 const cors = require('./cors');
 
-const contactusRouter = express.Router();
+const contactmeRouter = express.Router();
 
-contactusRouter.route('/')
+contactmeRouter.route('/')
 .options(cors.corsWithOptions, (req, res) => res.statusCode(200))
 .get(cors.cors, (req, res) => {
   res.statusCode = 200;
@@ -30,7 +30,7 @@ contactusRouter.route('/')
   res.end('DELETE operation not supported for /contactus');
 });
 
-contactusRouter.route('/visitors')
+contactmeRouter.route('/visitors')
 .options(cors.corsWithOptions, (req, res) => res.statusCode(200))
 .get(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
       Visitor.find()
@@ -59,7 +59,7 @@ contactusRouter.route('/visitors')
       .catch(err =>next(err));
   });
 
-  contactusRouter.route('/visitors/:visitorId')
+  contactmeRouter.route('/visitors/:visitorId')
   .options(cors.corsWithOptions, (req, res) => res.statusCode(200))
   .get(cors.corsWithOptions, authenticate.verifyUser, authenticate.verifyAdmin, (req, res, next) => {
         Visitor.findById(req.params.visitorId)
@@ -88,4 +88,4 @@ contactusRouter.route('/visitors')
         .catch(err =>next(err));
     });
 
-module.exports = contactusRouter;
+module.exports = contactmeRouter;
