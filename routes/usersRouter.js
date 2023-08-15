@@ -74,16 +74,6 @@ usersRouter.route('/signup')
     );
 });
 
-/*usersRouter.route('/login')
-.options(cors.corsWithOptions, (req, res) => res.statusCode(200))
-.post(cors.corsWithOptions, passport.authenticate('local'), (req, res) => {
-      const token = authenticate.getToken({ _id: req.user._id });
-      console.log('req.user: ', req.user);
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'application/json');
-      res.json({ success: true, token: token, status: 'You are succesfully logged in!' });
-});*/
-
 usersRouter.route('/login')
 .options(cors.corsWithOptions, (req, res) => res.statusCode(200))
 .post(cors.corsWithOptions, (req, res, next) => {

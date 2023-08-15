@@ -1,17 +1,16 @@
 var createError = require('http-errors');
 var express = require('express');
-var path = require('path');
-//var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var path = require('path');
 
 var contactmeRouter = require('./routes/contactmeRouter');
 var usersRouter = require('./routes/usersRouter');
+const fileRouter = require('./routes/fileRouter');
 
 const mongoose = require('mongoose');
 const passport = require('passport');
 
 const config = require('./config');
-//const uploadRouter = require('./routes/uploadRouter');
 
 const url = config.mongoUrl;
 
@@ -43,6 +42,7 @@ app.use(passport.initialize());
 
 app.use('/', contactmeRouter);
 app.use('/users', usersRouter);
+app.use('/files', fileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
