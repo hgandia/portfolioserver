@@ -12,15 +12,15 @@ const passport = require('passport');
 
 const config = require('./config');
 
-const url = config.mongoUrl;
+//const url = config.mongoUrl; // This is used when connecting locally to MongoDB.
+const url = config.mongoConnectionString;
 
 const connect = mongoose.connect(url, {
   useCreateIndex: true,
   useFindAndModify: false,
   useNewUrlParser: true,
   useUnifiedTopology: true
-}
-);
+});
 
 connect.then(() => {
   console.log('Connected correctly to MongoDB server'), err => console.log(err);
