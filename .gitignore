@@ -1,3 +1,6 @@
 node_modules
 config.js
-files
+files/upload
+files/download
+bin/server.key
+bin/server.cert
