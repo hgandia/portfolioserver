@@ -66,7 +66,7 @@ fileRouter.route('/upload')
 
 fileRouter.route('/download/:filename')
 .options(cors.corsWithOptions, (req, res) => res.sendStatus(200))
-.get(cors.cors,  authenticate.verifyUser, (req, res) => {
+.get(cors.cors, authenticate.verifyUser, (req, res) => {
     const filename = req.params.filename;
     const filePath = path.join(__dirname, '../files/download/', filename);
 
