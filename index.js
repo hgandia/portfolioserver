@@ -15,28 +15,39 @@ const config = require('./config');
 //const url = config.mongoUrl; // This is used when connecting locally to MongoDB.
 const url = config.mongoConnectionString;
 
-const connect = mongoose.connect(url, {
-  useCreateIndex: true,
-  useFindAndModify: false,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+// const connect = mongoose.connect(url, {
+//   useCreateIndex: true,
+//   useFindAndModify: false,
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true
+// });
 
-connect.then(() => {
-  console.log('Connected correctly to MongoDB server'), err => console.log(err);
+const connect = async () => {
+  await mongoose.connect(url, {
+   useCreateIndex: true,
+   useFindAndModify: false,
+   useNewUrlParser: true,
+   useUnifiedTopology: true
 });
+};
+
+connect().catch(err => functions.logger.log(err));
+
+// connect.then(() => {
+//   console.log('Connected correctly to MongoDB server'), err => console.log(err);
+// });
 
 var app = express();
 
 //Secure Traffic Only
-app.all('*', (req, res, next) => {
-  if(req.secure){
-    return next();
-  } else {
-      console.log(`Redirecting to: https://${req.hostname}:${app.get('secPort')}${req.url}`);
-      res.redirect(301, `https://${req.hostname}:${app.get('secPort')}${req.url}`);
-  }
-});
+// app.all('*', (req, res, next) => {
+//   if(req.secure){
+//     return next();
+//   } else {
+//       console.log(`Redirecting to: https://${req.hostname}:${app.get('secPort')}${req.url}`);
+//       res.redirect(301, `https://${req.hostname}:${app.get('secPort')}${req.url}`);
+//   }
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -70,4 +81,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = app;
+//module.exports = app; //This works locally, without Google Cloud Functions and have to rename index.js to app.js so that it can work locally.
+exports.portfolioserver = app; //This works in conjuction with Google Cloud Functions not locally.  

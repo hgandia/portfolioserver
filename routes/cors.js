@@ -3,6 +3,8 @@ const cors = require('cors');
 const whitelist = [
     'http://localhost:3000', 
     'https://localhost:3443',
+    'http://localhost:8080',
+    'https:localhost:8080',
     'http://herbertgandia.com',
     'https://herbertgandia.com',
     'http://www.herbertgandia.com'
